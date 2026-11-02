@@ -1,0 +1,100 @@
+!DOCTYPE html
+html lang=en
+head
+    meta charset=UTF-8
+    meta name=viewport content=width=device-width, initial-scale=1.0
+    titleFCValidator Methodology Flowcharttitle
+    !-- Load Mermaid.js via CDN --
+    script src=httpscdn.jsdelivr.netnpmmermaiddistmermaid.min.jsscript
+    script
+        mermaid.initialize({ startOnLoad true, theme 'default' });
+    script
+    style
+        body {
+            font-family 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color #f7f9fc;
+            margin 0;
+            padding 40px;
+            display flex;
+            flex-direction column;
+            align-items center;
+        }
+        h1 {
+            color #2e3440;
+            margin-bottom 5px;
+        }
+        p {
+            color #4c566a;
+            margin-bottom 30px;
+        }
+        .mermaid-container {
+            background-color white;
+            padding 30px;
+            border-radius 12px;
+            box-shadow 0 4px 20px rgba(0, 0, 0, 0.08);
+            border 1px solid #e5e9f0;
+            max-width 95%;
+        }
+    style
+head
+body
+    h1FCValidator Methodology Pipelineh1
+    pOpen this page in any web browser to render the flowchart diagram.p
+    
+    div class=mermaid-container
+        div class=mermaid
+            graph TD
+                %% Custom sketchy visual styles
+                classDef file fill#f0f4f8,stroke#3b3b3b,stroke-width2px,color#2b2b2b,stroke-dasharray 5 5;
+                classDef process fill#fffdfa,stroke#3b3b3b,stroke-width2px,color#2b2b2b,stroke-dasharray 5 5;
+                classDef report fill#f2faf3,stroke#3b3b3b,stroke-width2px,color#2b2b2b,stroke-dasharray 5 5;
+
+                subgraph Inputs [📂 Source Ingest]
+                    F_Src[📄 Fortran Interfacebr(.f90)]
+                    C_Src[📄 C Headerbr(.h)]
+                end
+
+                subgraph Parsers [🔍 Parsing Stage]
+                    F_Parser[⚙️ Lexer & gfortran]
+                    C_Parser[⚙️ Clang AST API]
+                end
+
+                subgraph Validation [⚖️ ABI Validation Core]
+                    IR[🔄 Unified Language-Neutral IR]
+                    Val[⚙️ Comparator Engine]
+                    Check1[📏 Size & Padding Checks]
+                    Check2[👉 VALUE vs Reference Semantics]
+                end
+
+                subgraph Outputs [📊 Diagnostics & Outputs]
+                    Out[📝 Report Generator]
+                    CLI[🖥️ Rich CLI Table]
+                    JSON[📁 JSON  SARIF Reports]
+                end
+
+                %% Flow connections
+                F_Src -- F_Parser
+                C_Src -- C_Parser
+
+                F_Parser -- IR
+                C_Parser -- IR
+
+                IR -- Val
+                Val -- Check1
+                Val -- Check2
+
+                Check1 -- Out
+                Check2 -- Out
+
+                Out -- CLI
+                Out -- JSON
+
+                %% Apply Classes
+                class F_Src,C_Src file;
+                class F_Parser,C_Parser,IR,Val,Check1,Check2,Out process;
+                class CLI,JSON report;
+        div
+    div
+body
+html
+
